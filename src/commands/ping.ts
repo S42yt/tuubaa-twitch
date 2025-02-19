@@ -1,9 +1,10 @@
-import { ChatUserstate } from 'tmi.js';
+import { ChatUserstate } from "tmi.js";
 
 export default {
-  name: 'ping',
-  description: 'Replies with pong!',
+  name: "ping",
+  description: "Replies with pong and latency!",
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
-    return 'Pong!';
-  }
+    const latency = Math.round(Date.now() - Number(tags["tmi-sent-ts"]));
+    return `Pong! Latency: ${latency}ms`;
+  },
 };

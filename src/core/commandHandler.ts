@@ -1,30 +1,34 @@
-import { ChatUserstate } from 'tmi.js';
-import fs from 'fs';
-import path from 'path';
+import { ChatUserstate } from "tmi.js";
+import fs from "fs";
+import path from "path";
 
 interface Command {
   name: string;
   description: string;
-  execute: (channel: string, tags: ChatUserstate, args: string[]) => string | Promise<string>;
+  execute: (
+    channel: string,
+    tags: ChatUserstate,
+    args: string[],
+  ) => string | Promise<string>;
 }
 
 class CommandHandler {
   private commands: Map<string, Command>;
   private prefix: string;
 
-  constructor(prefix: string = '!') {
+  constructor(prefix: string = "!") {
     this.commands = new Map();
     this.prefix = prefix;
     this.loadCommands();
   }
 
   private async loadCommands() {
-    const commandsPath = path.join(__dirname, '..', 'commands');
-    
+    const commandsPath = path.join(__dirname, "..", "commands");
+
     try {
-      const commandFiles = fs.readdirSync(commandsPath).filter(file => 
-        file.endsWith('.ts') || file.endsWith('.js')
-      );
+      const commandFiles = fs
+        .readdirSync(commandsPath)
+        .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
 
       for (const file of commandFiles) {
         const command = (await import(path.join(commandsPath, file))).default;
@@ -32,11 +36,15 @@ class CommandHandler {
         console.log(`Loaded command: ${command.name}`);
       }
     } catch (error) {
-      console.error('Error loading commands:', error);
+      console.error("Error loading commands:", error);
     }
   }
 
-  public async handleMessage(channel: string, tags: ChatUserstate, message: string) {
+  public async handleMessage(
+    channel: string,
+    tags: ChatUserstate,
+    message: string,
+  ) {
     if (!message.startsWith(this.prefix)) return;
 
     const args = message.slice(this.prefix.length).trim().split(/ +/);
@@ -52,7 +60,7 @@ class CommandHandler {
       return response;
     } catch (error) {
       console.error(`Error executing command ${commandName}:`, error);
-      return 'An error occurred while executing the command.';
+      return "An error occurred while executing the command.";
     }
   }
 
