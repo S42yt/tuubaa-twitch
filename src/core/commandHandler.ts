@@ -9,6 +9,7 @@ interface Command {
     channel: string,
     tags: ChatUserstate,
     args: string[],
+    handler: CommandHandler
   ) => string | Promise<string>;
 }
 
@@ -56,7 +57,7 @@ class CommandHandler {
     if (!command) return;
 
     try {
-      const response = await command.execute(channel, tags, args);
+      const response = await command.execute(channel, tags, args, this);
       return response;
     } catch (error) {
       console.error(`Error executing command ${commandName}:`, error);
