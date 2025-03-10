@@ -1,0 +1,19 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci --only=production
+
+COPY tsconfig.json ./
+COPY src/ ./src/
+
+RUN npm run build
+
+COPY .env.template .env
+COPY tokens.json ./tokens.json
+
+VOLUME ["/app/tokens.json", "/app/.env"]
+
+CMD ["npm","run", "start"]

@@ -5,21 +5,23 @@ let commandHandler: CommandHandler | null = null;
 
 export default {
   name: "commands",
-  description: "Shows all available commands",
+  description: "Zeigt alle verfügbaren Befehle an",
+  aliases: ["cmds", "hilfe", "befehle"],
   execute: (channel: string, tags: ChatUserstate, args: string[], handler?: CommandHandler) => {
     if (handler) {
       commandHandler = handler;
     }
 
     if (!commandHandler) {
-      return `/w ${tags.username} Error: Command handler not initialized`;
+      return `@${tags.username} Fehler: Command Handler wurde nicht initialisiert`;
     }
 
     const commands = commandHandler.getCommands();
     const commandList = Array.from(commands.values())
-      .map(cmd => `${cmd.name}: ${cmd.description}`)
-      .join(" | ");
+      .filter(cmd => cmd.name !== 'undefined' && cmd.description !== 'undefined')
+      .map(cmd => `!${cmd.name} (${cmd.description})`)
+      .join('\n\n');
 
-    return ` ${tags.username} Available commands: ${commandList}`;
+    return `@${tags.username}\nVerfügbare Befehle:\n\n${commandList}`;
   },
 };

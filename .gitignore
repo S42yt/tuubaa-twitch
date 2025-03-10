@@ -9,6 +9,7 @@ package-lock.json
 .env
 .env.local
 .env.*.local
+tokens.json
 
 # Build output
 dist/

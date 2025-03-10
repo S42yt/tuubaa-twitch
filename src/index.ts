@@ -15,8 +15,13 @@ client.on("message", async (channel, tags, message, self) => {
 const startBot = async () => {
   try {
     await connectClient();
+    console.log(`
+    ╔════════════════════════════╗
+    ║       TUUBAAS NAVI         ║
+    ╚════════════════════════════╝
+    `);
   } catch (error) {
-    console.error("Failed to start bot:", error);
+    console.error("Bot konnte nicht gestartet werden:", error);
     process.exit(1);
   }
 };

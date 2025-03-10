@@ -13,6 +13,6 @@ export default {
       return `Wilkommen zurück zum Stream, ${tags["display-name"]} 👋`;
     }
 
-    return `${tags["display-name"]}, wie kommst du zurück vom lurk, wenn du garnicht schläfst?`;
+    return `${tags["display-name"]}, wie wachst du auf, ohne zu schlafen?`;
   },
 };
