@@ -5,7 +5,6 @@ export default {
   name: "unban",
   description: "Entbannt einen Nutzer aus dem Kanal (z.B. !unban @nutzer)",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
-    // Berechtigungsprüfung
     if (
       !tags.mod &&
       tags.username?.toLowerCase() !== channel.replace("#", "")
@@ -13,7 +12,6 @@ export default {
       return `@${tags["display-name"]} Du hast keine Berechtigung, diese Aktion durchzuführen!`;
     }
 
-    // Argumente prüfen
     if (args.length < 1) {
       return `@${tags["display-name"]} Verwendung: !unban @nutzername`;
     }
@@ -26,7 +24,6 @@ export default {
     } catch (error) {
       console.error("Unban error:", error);
 
-      // Verbesserte Fehlerbehandlung
       if (error instanceof Error) {
         if (error.message.includes("no permission")) {
           return `@${tags["display-name"]} Der Bot hat keine Berechtigung, diese Aktion durchzuführen.`;
