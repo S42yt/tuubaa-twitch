@@ -18,8 +18,10 @@ interface TokenData {
 
 function isBroadcaster(channel: string, tags: ChatUserstate): boolean {
   const channelName = channel.replace("#", "").toLowerCase();
-  return tags.username?.toLowerCase() === channelName || 
-         tags.badges?.broadcaster === '1';
+  return (
+    tags.username?.toLowerCase() === channelName ||
+    tags.badges?.broadcaster === "1"
+  );
 }
 
 function loadChannelTokens(): TokenData {
@@ -46,10 +48,11 @@ function saveChannelToken(channelName: string, token: string): void {
 
 export default {
   name: "token",
-  description: "Speichert den Twitch-Token für den Kanal (nur für den Streamer)",
+  description:
+    "Speichert den Twitch-Token für den Kanal (nur für den Streamer)",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     const channelName = channel.replace("#", "");
-    
+
     if (tags.username?.toLowerCase() !== channelName) {
       return `@${tags["display-name"]} Nur der Streamer kann seinen eigenen Token setzen.`;
     }

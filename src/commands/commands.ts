@@ -7,7 +7,12 @@ export default {
   name: "commands",
   description: "Zeigt alle verfügbaren Befehle an",
   aliases: ["cmds", "hilfe", "befehle"],
-  execute: (channel: string, tags: ChatUserstate, args: string[], handler?: CommandHandler) => {
+  execute: (
+    channel: string,
+    tags: ChatUserstate,
+    args: string[],
+    handler?: CommandHandler,
+  ) => {
     if (handler) {
       commandHandler = handler;
     }
@@ -18,9 +23,11 @@ export default {
 
     const commands = commandHandler.getCommands();
     const commandList = Array.from(commands.values())
-      .filter(cmd => cmd.name !== 'undefined' && cmd.description !== 'undefined')
-      .map(cmd => `!${cmd.name} (${cmd.description})`)
-      .join('\n\n');
+      .filter(
+        (cmd) => cmd.name !== "undefined" && cmd.description !== "undefined",
+      )
+      .map((cmd) => `!${cmd.name} (${cmd.description})`)
+      .join("\n\n");
 
     return `@${tags.username}\nVerfügbare Befehle:\n\n${commandList}`;
   },

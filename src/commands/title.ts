@@ -1,7 +1,11 @@
 import { ChatUserstate } from "tmi.js";
 import axios from "axios";
 import dotenv from "dotenv";
-import { getChannelToken, getChannelInfo, updateChannelTitle } from "../utils/broadcastFetcher";
+import {
+  getChannelToken,
+  getChannelInfo,
+  updateChannelTitle,
+} from "../utils/broadcastFetcher";
 
 dotenv.config();
 
@@ -13,20 +17,20 @@ export default {
   name: "title",
   description: "Ändert den Titel des Streams (nur Mods)",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
-    
-    if (!tags.mod && tags.username?.toLowerCase() !== channel.replace("#", "")) {
+    if (
+      !tags.mod &&
+      tags.username?.toLowerCase() !== channel.replace("#", "")
+    ) {
       return `@${tags["display-name"]} Du hast keine Berechtigung, den Titel zu ändern!`;
     }
 
     const channelName = channel.replace("#", "");
-    
-    
+
     const channelToken = getChannelToken(channelName);
     if (!channelToken) {
       return `@${tags["display-name"]} Um den Titel zu ändern, muss der Streamer erst einen Token einrichten mit !settoken`;
     }
 
-    
     if (args.length === 0) {
       try {
         const channelInfo = await getChannelInfo(channelName);

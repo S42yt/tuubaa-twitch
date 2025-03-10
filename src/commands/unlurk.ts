@@ -1,5 +1,5 @@
 import { ChatUserstate } from "tmi.js";
-import { lurkers } from "./lurk";  
+import { lurkers } from "./lurk";
 
 export default {
   name: "unlurk",

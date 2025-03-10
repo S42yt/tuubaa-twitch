@@ -6,12 +6,12 @@ export default {
   description: "Handles bits cheering in the chat",
   execute: (channel: string, userstate: ChatUserstate, message: string) => {
     if (!userstate.bits) return;
-    
+
     const bits = parseInt(userstate.bits);
     const username = userstate["display-name"] || userstate.username;
-    
+
     let response = `Vielen Dank für die ${bits} Bits, ${username}! 🎉`;
-    
+
     switch (true) {
       case bits >= 10000:
         response = `WOW! Vielen herzlichen Dank für die unglaublichen ${bits} Bits, ${username}! Das ist wirklich großzügig! 🎉🎉🎉`;
@@ -23,7 +23,7 @@ export default {
         response = `Fantastisch! Vielen Dank für die tollen ${bits} Bits, ${username}! 🎉`;
         break;
     }
-    
+
     client.say(channel, response);
   },
 };

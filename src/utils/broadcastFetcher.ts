@@ -52,109 +52,141 @@ export function getChannelToken(channelName: string): string | null {
 }
 
 export async function getBroadcasterId(channelName: string): Promise<string> {
-  const userResponse = await axios.get(`https://api.twitch.tv/helix/users?login=${channelName}`, {
-    headers: {
-      "Client-ID": TWITCH_CLIENT_ID,
-      "Authorization": `Bearer ${TWITCH_OAUTH_TOKEN}`
-    }
-  });
-  
+  const userResponse = await axios.get(
+    `https://api.twitch.tv/helix/users?login=${channelName}`,
+    {
+      headers: {
+        "Client-ID": TWITCH_CLIENT_ID,
+        Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
+      },
+    },
+  );
+
   const broadcasterId = userResponse.data.data[0]?.id;
-  
+
   if (!broadcasterId) {
     throw new Error(`Channel ${channelName} not found`);
   }
-  
+
   return broadcasterId;
 }
 
-
-export async function getChannelInfo(channelName: string): Promise<ChannelInfo> {
+export async function getChannelInfo(
+  channelName: string,
+): Promise<ChannelInfo> {
   const broadcasterId = await getBroadcasterId(channelName);
-  
-  const channelResponse = await axios.get(`https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`, {
-    headers: {
-      "Client-ID": TWITCH_CLIENT_ID,
-      "Authorization": `Bearer ${TWITCH_OAUTH_TOKEN}`
-    }
-  });
-  
+
+  const channelResponse = await axios.get(
+    `https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`,
+    {
+      headers: {
+        "Client-ID": TWITCH_CLIENT_ID,
+        Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
+      },
+    },
+  );
+
   return channelResponse.data.data[0];
 }
 
 export async function searchGame(gameName: string): Promise<Game | null> {
-  const response = await axios.get(`https://api.twitch.tv/helix/games?name=${encodeURIComponent(gameName)}`, {
-    headers: {
-      "Client-ID": TWITCH_CLIENT_ID,
-      "Authorization": `Bearer ${TWITCH_OAUTH_TOKEN}`
-    }
-  });
-  
-  if (response.data.data.length === 0) {
-    const searchResponse = await axios.get(`https://api.twitch.tv/helix/search/categories?query=${encodeURIComponent(gameName)}&first=1`, {
+  const response = await axios.get(
+    `https://api.twitch.tv/helix/games?name=${encodeURIComponent(gameName)}`,
+    {
       headers: {
         "Client-ID": TWITCH_CLIENT_ID,
-        "Authorization": `Bearer ${TWITCH_OAUTH_TOKEN}`
-      }
-    });
-    
+        Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
+      },
+    },
+  );
+
+  if (response.data.data.length === 0) {
+    const searchResponse = await axios.get(
+      `https://api.twitch.tv/helix/search/categories?query=${encodeURIComponent(gameName)}&first=1`,
+      {
+        headers: {
+          "Client-ID": TWITCH_CLIENT_ID,
+          Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
+        },
+      },
+    );
+
     if (searchResponse.data.data.length === 0) {
       return null;
     }
-    
+
     return searchResponse.data.data[0];
   }
-  
+
   return response.data.data[0];
 }
 
-export async function updateChannelTitle(channelName: string, newTitle: string, channelToken: string): Promise<void> {
-  const broadcasterId = await getBroadcasterId(channelName);
-  
-  await axios.patch(`https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`, {
-    title: newTitle
-  }, {
-    headers: {
-      "Client-ID": TWITCH_CLIENT_ID,
-      "Authorization": `Bearer ${channelToken}`,
-      "Content-Type": "application/json"
-    }
-  });
-}
-
-export async function updateChannelCategory(channelName: string, gameId: string, channelToken: string): Promise<void> {
-  const broadcasterId = await getBroadcasterId(channelName);
-  
-  await axios.patch(`https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`, {
-    game_id: gameId
-  }, {
-    headers: {
-      "Client-ID": TWITCH_CLIENT_ID,
-      "Authorization": `Bearer ${channelToken}`,
-      "Content-Type": "application/json"
-    }
-  });
-}
-
-
-export async function updateChannelInfo(
-  channelName: string, 
-  updates: { title?: string; gameId?: string }, 
-  channelToken: string
+export async function updateChannelTitle(
+  channelName: string,
+  newTitle: string,
+  channelToken: string,
 ): Promise<void> {
   const broadcasterId = await getBroadcasterId(channelName);
-  
+
+  await axios.patch(
+    `https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`,
+    {
+      title: newTitle,
+    },
+    {
+      headers: {
+        "Client-ID": TWITCH_CLIENT_ID,
+        Authorization: `Bearer ${channelToken}`,
+        "Content-Type": "application/json",
+      },
+    },
+  );
+}
+
+export async function updateChannelCategory(
+  channelName: string,
+  gameId: string,
+  channelToken: string,
+): Promise<void> {
+  const broadcasterId = await getBroadcasterId(channelName);
+
+  await axios.patch(
+    `https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`,
+    {
+      game_id: gameId,
+    },
+    {
+      headers: {
+        "Client-ID": TWITCH_CLIENT_ID,
+        Authorization: `Bearer ${channelToken}`,
+        "Content-Type": "application/json",
+      },
+    },
+  );
+}
+
+export async function updateChannelInfo(
+  channelName: string,
+  updates: { title?: string; gameId?: string },
+  channelToken: string,
+): Promise<void> {
+  const broadcasterId = await getBroadcasterId(channelName);
+
   const payload: Record<string, string> = {};
   if (updates.title) payload.title = updates.title;
   if (updates.gameId) payload.game_id = updates.gameId;
-  
+
   if (Object.keys(payload).length > 0) {
-    await axios.patch(`https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`, payload, {
-      headers: {
-        "Client-ID": TWITCH_CLIENT_ID,
-        "Authorization": `Bearer ${channelToken}`,
-        "Content-Type": "application/json"
-      }
-    });
+    await axios.patch(
+      `https://api.twitch.tv/helix/channels?broadcaster_id=${broadcasterId}`,
+      payload,
+      {
+        headers: {
+          "Client-ID": TWITCH_CLIENT_ID,
+          Authorization: `Bearer ${channelToken}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
   }
 }

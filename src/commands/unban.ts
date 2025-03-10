@@ -6,7 +6,10 @@ export default {
   description: "Entbannt einen Nutzer aus dem Kanal (z.B. !unban @nutzer)",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     // Berechtigungsprüfung
-    if (!tags.mod && tags.username?.toLowerCase() !== channel.replace("#", "")) {
+    if (
+      !tags.mod &&
+      tags.username?.toLowerCase() !== channel.replace("#", "")
+    ) {
       return `@${tags["display-name"]} Du hast keine Berechtigung, diese Aktion durchzuführen!`;
     }
 
@@ -22,16 +25,16 @@ export default {
       return `@${tags["display-name"]} ${targetUser} wurde entbannt.`;
     } catch (error) {
       console.error("Unban error:", error);
-      
+
       // Verbesserte Fehlerbehandlung
       if (error instanceof Error) {
-        if (error.message.includes('no permission')) {
+        if (error.message.includes("no permission")) {
           return `@${tags["display-name"]} Der Bot hat keine Berechtigung, diese Aktion durchzuführen.`;
-        } else if (error.message.includes('not found')) {
+        } else if (error.message.includes("not found")) {
           return `@${tags["display-name"]} Der Nutzer ${targetUser} wurde nicht gefunden oder ist nicht gebannt.`;
         }
       }
-      
+
       return `@${tags["display-name"]} Fehler beim Entbannen. Überprüfe, ob der Nutzername korrekt ist und der Bot die nötigen Berechtigungen hat.`;
     }
   },
