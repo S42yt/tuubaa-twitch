@@ -17,8 +17,8 @@ async function buildServer(): Promise<FastifyInstance> {
     origin: [
       "https://tuubaa.de",
       "http://localhost:3000",
-      "https://*.vercel.app", 
-      /\.tuubaa\.de$/, 
+      "https://*.vercel.app",
+      /\.tuubaa\.de$/,
     ],
     methods: ["GET", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "Origin", "Accept"],
@@ -38,12 +38,7 @@ async function buildServer(): Promise<FastifyInstance> {
       for (const file of commandFiles) {
         const commandModule = require(path.join(commandsPath, file)).default;
 
-        let userLevel = "Jeder";
-        if (["ban.ts", "timeout.ts", "mod.ts", "unban.ts", "nuke.ts", "title.ts", "category.ts"].includes(file)) {
-          userLevel = "Wachhunde/Mods";
-        } else if (file === "token.ts") {
-          userLevel = "tuubaa only";
-        }
+        const userLevel = commandModule.userLevel || "Jeder";
 
         commands[commandModule.name] = {
           command: `!${commandModule.name}`,

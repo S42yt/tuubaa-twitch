@@ -18,6 +18,7 @@ export default {
   name: "category",
   description:
     "Ändert die Kategorie des Streams oder zeigt die aktuelle an (nur Mods)",
+  userLevel: "Wachhunde/Mods",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&

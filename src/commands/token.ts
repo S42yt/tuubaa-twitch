@@ -50,6 +50,7 @@ export default {
   name: "token",
   description:
     "Speichert den Twitch-Token für den Kanal (nur für den Streamer)",
+  userLevel: "tuubaa only",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     const channelName = channel.replace("#", "");
 

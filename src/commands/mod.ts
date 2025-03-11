@@ -7,6 +7,7 @@ export default {
   description:
     "Moderations-Tool: !mod [timeout|ban|unban] @nutzer [dauer] [grund]",
   aliases: ["moderation"],
+  userLevel: "Wachhunde/Mods",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&

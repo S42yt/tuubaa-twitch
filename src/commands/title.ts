@@ -16,6 +16,7 @@ if (!process.env.TWITCH_CLIENT_ID || !process.env.TWITCH_OAUTH_TOKEN) {
 export default {
   name: "title",
   description: "Ändert den Titel des Streams (nur Mods)",
+  userLevel: "Wachhunde/Mods",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&

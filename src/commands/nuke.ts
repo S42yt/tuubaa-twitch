@@ -6,6 +6,7 @@ export default {
   description:
     "Löscht eine bestimmte Anzahl an Nachrichten im Chat (nur für Moderatoren)",
   aliases: ["clear", "purge"],
+  userLevel: "Wachhunde/Mods",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags.username?.toLowerCase();
     const channelName = channel.replace("#", "");

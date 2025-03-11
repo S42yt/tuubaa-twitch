@@ -9,6 +9,7 @@ export default {
   name: "commands",
   description: "Zeigt den Link zu den Befehlen",
   aliases: ["cmd", "cmds", "help", "befehle", "hilfe"],
+  userLevel: "Wachhunde/Mods",
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags["display-name"] || tags.username;
 

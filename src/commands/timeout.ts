@@ -7,6 +7,7 @@ export default {
   description:
     "Timeout einen Nutzer für eine bestimmte Zeit (z.B. !timeout @nutzer 10m Spam)",
   aliases: ["to"],
+  userLevel: "Wachhunde/Mods",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&

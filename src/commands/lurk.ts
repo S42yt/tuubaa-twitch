@@ -5,6 +5,7 @@ export const lurkers = new Set<string>();
 export default {
   name: "lurk",
   description: "Zeigt an, dass du gerade lurkst",
+  userLevel: "Jeder",
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags.username;
     if (!username) return "";

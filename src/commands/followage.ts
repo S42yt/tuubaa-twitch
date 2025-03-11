@@ -13,6 +13,7 @@ export default {
   name: "followage",
   description: "Zeigt an, wie lange du einem Kanal bereits folgst",
   aliases: ["following", "folgt"],
+  userLevel: "Jeder",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     const channelName = channel.replace("#", "");
     const username = args[0]?.replace("@", "") || tags.username;

@@ -9,6 +9,7 @@ export default {
   name: "discord",
   description: "Zeigt den Link zum Discord-Server",
   aliases: ["dc", "community"],
+  userLevel: "Jeder",
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags["display-name"] || tags.username;
 

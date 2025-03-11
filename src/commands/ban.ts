@@ -6,6 +6,7 @@ export default {
   description:
     "Bannt einen Nutzer permanent aus dem Kanal (z.B. !ban @nutzer Grund)",
   aliases: ["permaban"],
+  userLevel: "Wachhunde/Mods",
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&

@@ -9,6 +9,7 @@ export default {
   name: "youtube",
   description: "Zeigt den Link zu dem YouTube Kanal",
   aliases: ["yt", "videos"],
+  userLevel: "Jeder",
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags["display-name"] || tags.username;
 

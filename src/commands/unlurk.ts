@@ -4,6 +4,7 @@ import { lurkers } from "./lurk";
 export default {
   name: "unlurk",
   description: "Beendet deinen Lurk-Modus",
+  userLevel: "Jeder",
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags.username;
     if (!username) return "";
