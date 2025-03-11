@@ -19,7 +19,7 @@ export default {
     const isPrime = methods.prime;
     const subType = isPrime ? "Prime" : tierName;
 
-    let response = `Vielen Dank für dein ${subType} Abonnement, ${username}! 🎉`;
+    let response = `Vielen Dank für dein ${subType} Sub, ${username}! 🎉`;
 
     if (userstate["msg-param-cumulative-months"] > 1) {
       const months = userstate["msg-param-cumulative-months"];
