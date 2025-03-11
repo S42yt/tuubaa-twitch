@@ -2,14 +2,12 @@
 
 ### Mach das nur wenn du weißt was du tust!!!!!!
 
-
 ## Prerequisites
 
 Before you can run this bot, make sure you have:
 
 - [Node.js](https://nodejs.org/) installieren (version 18 oder neuer)
 - [npm](https://www.npmjs.com/get-npm) oder jeder andere package manager
-
 
 ## Bauen
 
@@ -29,31 +27,38 @@ Nachdem du alles in der .env eingeben hast gibt es mehrer modis in dem du den Bo
 ## Developer Modis:
 
 ### Static Dev
+
 ```sh
 npm run dev
 ```
+
 Mit static dev wird dein aktueller code genommen und der bot wird damit gestartet aber es wird nichts live geupdatet.
 
 ### Live Dev
+
 ```sh
 npm run live
 ```
+
 Mit Live Dev kannst du deinen Bot starten und alle änderungen werden live geupdatet
 
 ## Production
 
 ### Bauen
+
 ```sh
 npm run build
 ```
+
 Erstmal baust du deinen Code und compilest in in Javascript
 
 ### Starten
+
 ```sh
 npm run start
 ```
-Dann startest du den bot in Production
 
+Dann startest du den bot in Production
 
 ## Docker Container
 
@@ -65,8 +70,8 @@ Dann kannst du diesen Command eingeben:
 ```sh
 docker container up -d
 ```
-Damit startet dein Container!
 
+Damit startet dein Container!
 
 ## TOKEN
 
@@ -87,7 +92,7 @@ Der Bot erstellt dann die tokens.json file und die sieht dann so aus:
 
 ```json
 {
-      "1tuubaa": {
+  "1tuubaa": {
     "access_token": ""
   }
 }
@@ -97,7 +102,7 @@ Im leerzeichen zwischen den Klammer: "", machst du dann das token rein und so so
 
 ```json
 {
-      "1tuubaa": {
+  "1tuubaa": {
     "access_token": "abrwe23313213"
   }
 }
@@ -107,6 +112,6 @@ Im leerzeichen zwischen den Klammer: "", machst du dann das token rein und so so
 
 Diese Projekt ist unter einer MIT Lizenz lizenziert. Mehr infos in der [LICENSE](LICENSE).
 
-
 ## Hilfe
+
 Falls du Hilfe brauchst kannst du mich gerne auf Discord Kontaktieren oder ein Issue öffnen !

@@ -11,11 +11,11 @@ export default {
   aliases: ["dc", "community"],
   execute: (channel: string, tags: ChatUserstate, args: string[]) => {
     const username = tags["display-name"] || tags.username;
-    
+
     const channelName = channel.replace("#", "");
-    
+
     let response = `Hey ${username}! schau vorbei in tuubaas goldenem Van: ${DISCORD_INVITE}`;
-    
+
     return response;
   },
 };

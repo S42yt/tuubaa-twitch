@@ -3,7 +3,8 @@ import { client } from "../client";
 
 export default {
   name: "ban",
-  description: "Bannt einen Nutzer permanent aus dem Kanal (z.B. !ban @nutzer Grund)",
+  description:
+    "Bannt einen Nutzer permanent aus dem Kanal (z.B. !ban @nutzer Grund)",
   aliases: ["permaban"],
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (

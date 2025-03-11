@@ -2,17 +2,28 @@ version: "3"
 
 services:
   tuubaa-bot:
-    build: .
+    build:
+      context: .
+      dockerfile: DOCKERFILE
     container_name: tuubaa-twitch-bot
     restart: unless-stopped
+    ports:
+      - "${PORT:-4000}:${PORT:-4000}"
     volumes:
       - ./tokens.json:/app/tokens.json
       - ./.env:/app/.env
     environment:
       - NODE_ENV=production
+    networks:
+      - tuubaa-network
 
     healthcheck:
-      test: ["CMD", "node", "-e", "require('tmi.js')"]
-      interval: 60s
+      test: ["CMD", "curl", "-f", "http://localhost:${PORT:-4000}/commands"]
+      interval: 30s
       timeout: 10s
       retries: 3
+      start_period: 15s
+
+networks:
+  tuubaa-network:
+    driver: bridge

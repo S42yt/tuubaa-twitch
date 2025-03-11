@@ -16,7 +16,7 @@ export default {
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     const channelName = channel.replace("#", "");
     const username = args[0]?.replace("@", "") || tags.username;
-    
+
     if (!username) {
       return `@${tags["display-name"]} Es konnte kein Benutzername gefunden werden.`;
     }
@@ -31,7 +31,7 @@ export default {
             "Client-ID": TWITCH_CLIENT_ID,
             Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
           },
-        }
+        },
       );
 
       if (!userResponse.data.data.length) {
@@ -47,7 +47,7 @@ export default {
             "Client-ID": TWITCH_CLIENT_ID,
             Authorization: `Bearer ${TWITCH_OAUTH_TOKEN}`,
           },
-        }
+        },
       );
 
       if (!followResponse.data.data.length) {
@@ -71,7 +71,7 @@ export default {
       }
     } catch (error) {
       console.error("Error in followage command:", error);
-      
+
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         return `@${tags["display-name"]} OAuth-Token ist ungültig oder abgelaufen.`;
       }

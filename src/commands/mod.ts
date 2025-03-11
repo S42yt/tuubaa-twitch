@@ -4,7 +4,8 @@ import { client } from "../client";
 
 export default {
   name: "mod",
-  description: "Moderations-Tool: !mod [timeout|ban|unban] @nutzer [dauer] [grund]",
+  description:
+    "Moderations-Tool: !mod [timeout|ban|unban] @nutzer [dauer] [grund]",
   aliases: ["moderation"],
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (

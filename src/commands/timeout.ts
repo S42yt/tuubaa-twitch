@@ -4,11 +4,12 @@ import { parseDuration, formatDuration } from "../utils/durationHelper";
 
 export default {
   name: "timeout",
-  description: "Timeout einen Nutzer für eine bestimmte Zeit (z.B. !timeout @nutzer 10m Spam)",
+  description:
+    "Timeout einen Nutzer für eine bestimmte Zeit (z.B. !timeout @nutzer 10m Spam)",
   aliases: ["to"],
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
-      !tags.mod && 
+      !tags.mod &&
       tags.username?.toLowerCase() !== channel.replace("#", "")
     ) {
       return `@${tags["display-name"]} Du hast keine Berechtigung, diese Aktion durchzuführen!`;
@@ -42,7 +43,7 @@ export default {
       if (seconds < 1) {
         return `@${tags["display-name"]} Die Timeout-Dauer muss mindestens 1 Sekunde betragen.`;
       }
-      
+
       if (seconds > 1209600) {
         return `@${tags["display-name"]} Die maximale Timeout-Dauer beträgt 2 Wochen.`;
       }

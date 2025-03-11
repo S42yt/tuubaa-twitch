@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN npm ci
 
 COPY tsconfig.json ./
 COPY src/ ./src/
@@ -12,8 +12,11 @@ COPY src/ ./src/
 RUN npm run build
 
 COPY .env.template .env
-COPY tokens.json ./tokens.json
+
+RUN if [ ! -f tokens.json ]; then echo "{}" > tokens.json; fi
 
 VOLUME ["/app/tokens.json", "/app/.env"]
+
+EXPOSE ${PORT:-4000}
 
 CMD ["npm","run", "start"]
