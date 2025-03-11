@@ -1,34 +1,21 @@
 import { ChatUserstate } from "tmi.js";
-import CommandHandler from "../core/commandHandler";
+import dotenv from "dotenv";
 
-let commandHandler: CommandHandler | null = null;
+dotenv.config();
+
+const COMMANDS_LINK = "https://tuubaa.de/commands";
 
 export default {
   name: "commands",
-  description: "Zeigt alle verfügbaren Befehle an",
-  aliases: ["cmds", "hilfe", "befehle"],
-  execute: (
-    channel: string,
-    tags: ChatUserstate,
-    args: string[],
-    handler?: CommandHandler,
-  ) => {
-    if (handler) {
-      commandHandler = handler;
-    }
-
-    if (!commandHandler) {
-      return `@${tags.username} Fehler: Command Handler wurde nicht initialisiert`;
-    }
-
-    const commands = commandHandler.getCommands();
-    const commandList = Array.from(commands.values())
-      .filter(
-        (cmd) => cmd.name !== "undefined" && cmd.description !== "undefined",
-      )
-      .map((cmd) => `!${cmd.name} (${cmd.description})`)
-      .join("\n\n");
-
-    return `@${tags.username}\nVerfügbare Befehle:\n\n${commandList}`;
+  description: "Zeigt den Link zu den Befehlen",
+  aliases: ["cmd", "cmds","help","befehle", "hilfe"],
+  execute: (channel: string, tags: ChatUserstate, args: string[]) => {
+    const username = tags["display-name"] || tags.username;
+    
+    const channelName = channel.replace("#", "");
+    
+    let response = `Hey ${username}! Wenn du alle Commands sehen willst geh auf: ${COMMANDS_LINK}`;
+    
+    return response;
   },
 };
