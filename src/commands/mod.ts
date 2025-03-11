@@ -4,8 +4,8 @@ import { client } from "../client";
 
 export default {
   name: "mod",
-  description:
-    "Moderations-Tool: !mod [timeout|ban|unban] @nutzer [dauer] [grund]",
+  description: "Moderations-Tool: !mod [timeout|ban|unban] @nutzer [dauer] [grund]",
+  aliases: ["moderation"],
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&
@@ -68,8 +68,12 @@ export default {
           return `@${tags["display-name"]} ${targetUser} wurde entbannt.`;
         }
 
+        case "help": {
+          return `@${tags["display-name"]} Verfügbare Befehle: !mod timeout @nutzer <dauer> [grund], !mod ban @nutzer [grund], !mod unban @nutzer, !timeout @nutzer <dauer> [grund], !ban @nutzer [grund], !unban @nutzer`;
+        }
+
         default:
-          return `@${tags["display-name"]} Ungültige Aktion. Verfügbare Aktionen: timeout, ban, unban`;
+          return `@${tags["display-name"]} Ungültige Aktion. Verfügbare Aktionen: timeout, ban, unban, help`;
       }
     } catch (error) {
       console.error("Moderation error:", error);

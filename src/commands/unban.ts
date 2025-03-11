@@ -4,6 +4,7 @@ import { client } from "../client";
 export default {
   name: "unban",
   description: "Entbannt einen Nutzer aus dem Kanal (z.B. !unban @nutzer)",
+  aliases: ["pardon"],
   execute: async (channel: string, tags: ChatUserstate, args: string[]) => {
     if (
       !tags.mod &&
