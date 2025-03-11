@@ -14,9 +14,16 @@ async function buildServer(): Promise<FastifyInstance> {
   const app = fastify({ logger: true });
 
   await app.register(fastifyCors, {
-    origin: "*",
-    methods: ["GET"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: [
+      "https://tuubaa.de",
+      "http://localhost:3000",
+      "https://*.vercel.app", 
+      /\.tuubaa\.de$/, 
+    ],
+    methods: ["GET", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Origin", "Accept"],
+    credentials: true,
+    maxAge: 86400,
   });
 
   const loadCommandsMetadata = (): Record<string, CommandMetadata> => {
@@ -115,7 +122,7 @@ async function buildServer(): Promise<FastifyInstance> {
 const startServer = async () => {
   const server = await buildServer();
   try {
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 4000;
     await server.listen({ port: Number(PORT), host: "0.0.0.0" });
     console.log(`API server running on port ${PORT}`);
   } catch (err) {
