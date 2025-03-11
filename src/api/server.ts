@@ -38,20 +38,11 @@ async function buildServer(): Promise<FastifyInstance> {
       for (const file of commandFiles) {
         const commandModule = require(path.join(commandsPath, file)).default;
 
-        let userLevel = "Everyone";
-        switch (file) {
-          case "ban.ts":
-          case "timeout.ts":
-          case "mod.ts":
-          case "unban.ts":
-          case "nuke.ts":
-          case "title.ts":
-          case "category.ts":
-            userLevel = "Wachhunde/Mods";
-            break;
-          case "token.ts":
-            userLevel = "Broadcaster only";
-            break;
+        let userLevel = "Jeder";
+        if (["ban.ts", "timeout.ts", "mod.ts", "unban.ts", "nuke.ts", "title.ts", "category.ts"].includes(file)) {
+          userLevel = "Wachhunde/Mods";
+        } else if (file === "token.ts") {
+          userLevel = "tuubaa only";
         }
 
         commands[commandModule.name] = {
