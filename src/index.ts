@@ -1,8 +1,10 @@
 import { client, connectClient } from "./client";
 import CommandHandler from "./core/commandHandler";
+import EventHandler from "./core/eventHandler";
 import { buildServer } from "./api/server";
 
 const commandHandler = new CommandHandler("!");
+const eventHandler = new EventHandler(client);
 
 client.on("message", async (channel, tags, message, self) => {
   if (self) return;
@@ -12,6 +14,7 @@ client.on("message", async (channel, tags, message, self) => {
     client.say(channel, response);
   }
 });
+
 
 const startBot = async () => {
   try {

@@ -1,9 +1,9 @@
 import fs from "fs";
 import path from "path";
-import { Client, Events } from "tmi.js";
+import { Client } from "tmi.js";
 
 interface TwitchEvent {
-  name: keyof Events;
+  name: string;
   description: string;
   execute: (...args: any[]) => void | Promise<void>;
 }
@@ -48,8 +48,11 @@ class EventHandler {
     }
 
     this.events.set(event.name, event);
-    this.client.on(event.name, (...args: any[]) => {
+
+    // Register the event with the TMI client
+    this.client.on(event.name as any, (...args: any[]) => {
       try {
+        console.log(`Executing event: ${event.name}`, args);
         event.execute(...args);
       } catch (error) {
         console.error(`Error executing event ${event.name}:`, error);
@@ -61,6 +64,7 @@ class EventHandler {
     const event = this.events.get(eventName);
     if (event) {
       try {
+        console.log(`Manually triggering event: ${eventName}`, args);
         event.execute(...args);
       } catch (error) {
         console.error(`Error manually triggering event ${eventName}:`, error);

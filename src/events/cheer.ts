@@ -5,6 +5,8 @@ export default {
   name: "cheer",
   description: "Handles bits cheering in the chat",
   execute: (channel: string, userstate: ChatUserstate, message: string) => {
+    console.log(`Cheer event triggered:`, userstate, message);
+    
     if (!userstate.bits) return;
 
     const bits = parseInt(userstate.bits);
